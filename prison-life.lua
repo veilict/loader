@@ -1,6 +1,10 @@
-local Auth = shared.getenvironment()["game-info/auth-token"]
+local AuthToken = "null"; do
+	local env = shared.getenvironment()
+	AuthToken = env["game-info/auth-token"] or AuthToken
+end
+
 local success, result = pcall(function()
-	return shared.gethttp("https://api.github.com/repos/veilict/game-info/prison-life.lua", Auth)
+	return shared.gethttp("https://api.github.com/repos/veilict/game-info/prison-life.lua", AuthToken)
 end)
 
 if (success) then
