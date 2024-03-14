@@ -1,10 +1,12 @@
+-- Behaves similarly to the shared function of _G/shared, but is more secure and private so even if users
+-- gain access to private plugins, they cannot interface with the internal functions.
+local GetSecureEnvironment--!GetSecureEnvironment
 local AuthToken = "null"; do
-	local env = shared.getenvironment()
-	AuthToken = env["game-info/auth-token"] or AuthToken
+	AuthToken = GetSecureEnvironment()["game-info/auth-token"] or AuthToken
 end
 
 local success, result = pcall(function()
-	return shared.gethttp("https://api.github.com/repos/veilict/game-info/prison-life.lua", AuthToken)
+	return GetSecureEnvironment()["gethttp"]("https://api.github.com/repos/veilict/game-info/prison-life.lua", AuthToken)
 end)
 
 if (success) then
